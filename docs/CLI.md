@@ -1,6 +1,6 @@
 # CLI
 
-This document describes how to use the Book Management System (bms) command line interface (CLI).
+This document describes how to use the Book Management System (boom) command line interface (CLI).
 
 {:toc}
 
@@ -9,7 +9,7 @@ This document describes how to use the Book Management System (bms) command line
 
 Overall usage
 
-    bms <entity> <operation>
+    boom <entity> <operation>
 
 with
 - `<entity>`: the entity to operate with
@@ -20,14 +20,14 @@ with
 
 Manage books
 
-    bms book <operation>
+    boom book <operation>
 
 
 ### List
 
 List books
 
-    bms book list [--filter <filter>]
+    boom book list [--filter <filter>]
 
 with
 - `<filter>`: filter expression
@@ -36,7 +36,7 @@ with
 
 Create book
 
-    bms book create
+    boom book create
         --title <title>
         --author <author>
         --published-date <published-date>
@@ -51,7 +51,7 @@ with
 
 Show details about a book
 
-    bms book show <book-id>
+    boom book show <book-id>
 
 with
 - `<book-id>`: ID of book
@@ -61,7 +61,7 @@ with
 
 Show details about a book
 
-    bms book set <book-id> <key> <value>
+    boom book set <book-id> <key> <value>
 
 with
 - `<book-id>`: ID of book
@@ -71,8 +71,72 @@ with
 
 Delete a book
 
-    bms book delete <book-id>
+    boom book delete <book-id>
 
 with
 - `<book-id>`: ID of book
+
+
+
+## Collections
+
+
+Manage books
+
+    boom book <operation>
+
+
+### List
+
+List books
+
+    boom book list [--filter <filter>]
+
+with
+- `<filter>`: filter expression
+
+### Create
+
+Create book
+
+    boom book create
+        --title <title>
+        --author <author>
+        --published-date <published-date>
+        --edition <edition>
+        --description <description>
+        --genre <genre>
+
+with
+- `<filter>`: filter expression
+
+### Show
+
+Show details about a book
+
+    boom book show <book-id>
+
+with
+- `<book-id>`: ID of book
+
+
+### Set
+
+Show details about a book
+
+    boom book set <book-id> <key> <value>
+
+with
+- `<book-id>`: ID of book
+
+
+### Delete
+
+Delete a book
+
+    boom book delete <book-id>
+
+with
+- `<book-id>`: ID of book
+
 
