@@ -135,3 +135,23 @@ Delete a collection
 with
 - `<collection-id>`: ID of collection
 
+### Add Book
+
+Add a book to a collection
+
+    boom collection add <collection-id> <book-id>
+
+with
+- `<collection-id>`: ID of collection
+- `<book-id>`: ID of book
+
+
+### Remove Book
+
+Remove a book from a collection
+
+    boom collection remove <collection-id> <book-id>
+
+with
+- `<collection-id>`: ID of collection
+- `<book-id>`: ID of book
