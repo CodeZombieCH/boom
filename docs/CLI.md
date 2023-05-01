@@ -2,6 +2,7 @@
 
 This document describes how to use the Book Management System (boom) command line interface (CLI).
 
+* TOC
 {:toc}
 
 
