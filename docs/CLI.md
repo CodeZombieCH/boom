@@ -2,7 +2,7 @@
 
 This document describes how to use the Book Management System (boom) command line interface (CLI).
 
-* TOC
+# TOC
 {:toc}
 
 
@@ -57,16 +57,16 @@ Show details about a book
 with
 - `<book-id>`: ID of book
 
-
 ### Set
 
-Show details about a book
+Set a property of a book
 
     boom book set <book-id> <key> <value>
 
 with
 - `<book-id>`: ID of book
-
+- `<key>`: Key of the property
+- `<value>`: Value of the property
 
 ### Delete
 
@@ -78,66 +78,60 @@ with
 - `<book-id>`: ID of book
 
 
-
 ## Collections
 
+Manage collections of books
 
-Manage books
-
-    boom book <operation>
+    boom collection <operation>
 
 
 ### List
 
-List books
+List collections
 
-    boom book list [--filter <filter>]
+    boom collection list [--filter <filter>]
 
 with
 - `<filter>`: filter expression
 
 ### Create
 
-Create book
+Create a new collection
 
-    boom book create
-        --title <title>
-        --author <author>
-        --published-date <published-date>
-        --edition <edition>
-        --description <description>
-        --genre <genre>
+    boom collection create
+        --name <name>
 
 with
-- `<filter>`: filter expression
+- `<name>`: name of the collection
 
 ### Show
 
-Show details about a book
+Show details about a collection
 
-    boom book show <book-id>
+    boom collection show <collection-id>
 
 with
-- `<book-id>`: ID of book
+- `<collection-id>`: ID of collection
 
 
 ### Set
 
-Show details about a book
+Set a property of a collection
 
-    boom book set <book-id> <key> <value>
+    boom collection set <collection-id> <key> <value>
 
 with
-- `<book-id>`: ID of book
+- `<collection-id>`: ID of collection
+- `<key>`: Key of the property
+- `<value>`: Value of the property
 
 
 ### Delete
 
-Delete a book
+Delete a collection
 
-    boom book delete <book-id>
+    boom collection delete <collection-id>
 
 with
-- `<book-id>`: ID of book
-
+- `<collection-id>`: ID of collection
 
