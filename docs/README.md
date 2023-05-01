@@ -5,10 +5,10 @@ Book Management System or boom (from **Boo**k **M**anagement System) as the name
 
 ## CLI
 
-See [CLI](docs/CLI.md)
+See [CLI](CLI)
 
 
 ## REST API
 
-See [API](docs/API.md)
+See [API](API)
 
