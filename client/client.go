@@ -18,6 +18,10 @@ type ApiClient struct {
 	baseUrl string
 }
 
+func NewApiClient(baseUrl string) ApiClient {
+	return ApiClient{baseUrl: baseUrl}
+}
+
 func (c *ApiClient) ListBooks() ([]Book, error) {
 	// Wait for new mail to arrive
 	client := http.Client{

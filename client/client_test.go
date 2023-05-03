@@ -6,7 +6,7 @@ import (
 )
 
 func TestCreateBook(t *testing.T) {
-	client := ApiClient{baseUrl: "http://localhost:8080/api"}
+	client := NewApiClient("http://localhost:8080/api")
 	book, err := client.CreateBook(Book{Title: "wuuzaa"})
 	if err != nil {
 		t.Fatal(err)
@@ -16,7 +16,7 @@ func TestCreateBook(t *testing.T) {
 }
 
 func TestListBooks(t *testing.T) {
-	client := ApiClient{baseUrl: "http://localhost:8080/api"}
+	client := NewApiClient("http://localhost:8080/api")
 	books, err := client.ListBooks()
 	if err != nil {
 		t.Fatal(err)
@@ -25,5 +25,4 @@ func TestListBooks(t *testing.T) {
 	for _, b := range books {
 		fmt.Println(b)
 	}
-
 }

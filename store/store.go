@@ -131,7 +131,7 @@ func (s BookJsonStore) load() ([]Book, error) {
 }
 
 func (s BookJsonStore) save(data []Book) error {
-	bytes, err := json.Marshal(data)
+	bytes, err := json.MarshalIndent(data, "", "  ")
 
 	if err != nil {
 		return err
