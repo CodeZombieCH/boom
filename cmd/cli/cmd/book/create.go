@@ -10,15 +10,16 @@ import (
 	"github.com/spf13/pflag"
 )
 
-// createCmd represents the create command
 var createCmd = &cobra.Command{
 	Use:   "create",
-	Short: "Creates a new book",
+	Short: "creates a new book",
 	Run: func(cmd *cobra.Command, args []string) {
 		parsedBook, err := parseBook(cmd.Flags())
+		if err != nil {
+			fmt.Printf("failed to parse book: %v/n", err)
+		}
 
 		apiClient := client.NewApiClient("http://localhost:8080/api")
-
 		book, err := apiClient.CreateBook(parsedBook)
 		if err != nil {
 			fmt.Printf("failed to create book: %v/n", err)
@@ -34,15 +35,6 @@ var createCmd = &cobra.Command{
 }
 
 func init() {
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// createCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// createCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	createCmd.Flags().StringP("title", "t", "", "title")
 	createCmd.MarkFlagRequired("title")
 
