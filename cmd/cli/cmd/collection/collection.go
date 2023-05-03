@@ -6,7 +6,7 @@ import (
 
 var CollectionCmd = &cobra.Command{
 	Use:   "collection",
-	Short: "manages collections of books",
+	Short: "Manages collections of books",
 }
 
 func init() {

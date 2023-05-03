@@ -12,7 +12,7 @@ import (
 
 var createCmd = &cobra.Command{
 	Use:   "create",
-	Short: "creates a new book",
+	Short: "Creates a new book",
 	Run: func(cmd *cobra.Command, args []string) {
 		parsedBook, err := parseBook(cmd.Flags())
 		if err != nil {

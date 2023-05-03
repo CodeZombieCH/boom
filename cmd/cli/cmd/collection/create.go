@@ -8,7 +8,7 @@ import (
 
 var createCmd = &cobra.Command{
 	Use:   "create",
-	Short: "creates a collection",
+	Short: "Creates a collection",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("create called")
 	},

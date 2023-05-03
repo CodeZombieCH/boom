@@ -10,7 +10,7 @@ import (
 
 var listCmd = &cobra.Command{
 	Use:   "list",
-	Short: "lists all books",
+	Short: "Lists all books",
 	Run: func(cmd *cobra.Command, args []string) {
 		apiClient := client.NewApiClient("http://localhost:8080/api")
 
