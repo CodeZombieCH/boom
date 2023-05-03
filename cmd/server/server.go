@@ -7,8 +7,8 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
-	"canonical/assessment/server"
-	"canonical/assessment/store"
+	"canonical/assessment/internal/routes"
+	"canonical/assessment/internal/store"
 )
 
 func main() {
@@ -27,7 +27,7 @@ func main() {
 	engine := gin.Default()
 
 	apiGroup := engine.Group("/api")
-	server.NewBookRoutes(apiGroup, store)
+	routes.NewBookRoutes(apiGroup, store)
 
 	engine.Run()
 }

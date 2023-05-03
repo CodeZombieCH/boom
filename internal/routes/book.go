@@ -1,4 +1,4 @@
-package server
+package routes
 
 import (
 	"net/http"
@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"canonical/assessment/store"
+	"canonical/assessment/internal/store"
 )
 
 type BookRoutes struct {

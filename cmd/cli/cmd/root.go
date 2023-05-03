@@ -6,8 +6,8 @@ package cmd
 import (
 	"os"
 
-	"canonical/assessment/cli/cmd/book"
-	"canonical/assessment/cli/cmd/collection"
+	"canonical/assessment/cmd/cli/cmd/book"
+	"canonical/assessment/cmd/cli/cmd/collection"
 
 	"github.com/spf13/cobra"
 )
