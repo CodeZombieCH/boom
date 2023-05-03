@@ -11,27 +11,22 @@ import (
 // createCmd represents the create command
 var createCmd = &cobra.Command{
 	Use:   "create",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Creates a new book",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("book create called")
-
 		title, _ := cmd.Flags().GetString("title")
 
-		c := client.NewApiClient("http://localhost:8080/api")
-		book, err := c.CreateBook(client.Book{Title: title})
+		apiClient := client.NewApiClient("http://localhost:8080/api")
+
+		book, err := apiClient.CreateBook(client.Book{Title: title})
 		if err != nil {
 			fmt.Printf("failed to create book: %v/n", err)
 		}
+
 		json, err := json.MarshalIndent(book, "", "  ")
 		if err != nil {
 			fmt.Printf("failed to parse response: %v/n", err)
 		}
+
 		fmt.Println(string(json))
 	},
 }

@@ -9,14 +9,14 @@ import (
 )
 
 type BookRoutes struct {
-	jsonStore store.BookJsonStore
+	store store.BookStore
 }
 
 func NewBookRoutes(
 	group *gin.RouterGroup,
-	jsonStore store.BookJsonStore) *BookRoutes {
+	store store.BookStore) *BookRoutes {
 
-	r := &BookRoutes{jsonStore: jsonStore}
+	r := &BookRoutes{store: store}
 	r.setupRoutes(group)
 	return r
 }
@@ -24,20 +24,20 @@ func NewBookRoutes(
 func (r *BookRoutes) setupRoutes(group *gin.RouterGroup) {
 	entityGroup := group.Group("/books")
 	{
-		entityGroup.GET("/", r.getBooks)
-		entityGroup.POST("/", r.createBook)
+		entityGroup.GET("", r.getBooks)
+		entityGroup.POST("", r.createBook)
 	}
 }
 
 // Shared
 type bookResponse struct {
-	Id    int    `json:"id"`
+	ID    uint   `json:"id"`
 	Title string `json:"title"`
 }
 
 func (r *BookRoutes) getBooks(c *gin.Context) {
 
-	books, err := r.jsonStore.GetAll()
+	books, err := r.store.GetAll()
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
@@ -57,17 +57,13 @@ func (r *BookRoutes) createBook(c *gin.Context) {
 		return
 	}
 
-	id, err := r.jsonStore.GetNextId()
+	book := &store.Book{ID: 0, Title: request.Title}
+
+	book, err := r.store.Set(book)
 	if err != nil {
-		c.AbortWithError(http.StatusInternalServerError, err)
-	}
-
-	book := store.Book{Id: id, Title: request.Title}
-
-	if err := r.jsonStore.Set(id, book); err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
 
-	c.JSON(http.StatusCreated, bookResponse(book))
+	c.JSON(http.StatusCreated, bookResponse(*book))
 }

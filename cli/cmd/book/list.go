@@ -1,6 +1,8 @@
 package book
 
 import (
+	"canonical/assessment/client"
+	"encoding/json"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -9,16 +11,21 @@ import (
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "list",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Lists all store books",
 	Run: func(cmd *cobra.Command, args []string) {
-		title, _ := cmd.Flags().GetString("title")
-		fmt.Println("book list called with " + title)
+		apiClient := client.NewApiClient("http://localhost:8080/api")
+
+		books, err := apiClient.ListBooks()
+		if err != nil {
+			fmt.Printf("failed to list books: %v/n", err)
+		}
+
+		json, err := json.MarshalIndent(books, "", "  ")
+		if err != nil {
+			fmt.Printf("failed to parse response: %v/n", err)
+		}
+
+		fmt.Println(string(json))
 	},
 }
 
@@ -32,5 +39,4 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	listCmd.Flags().StringP("title", "t", "", "Title")
 }
