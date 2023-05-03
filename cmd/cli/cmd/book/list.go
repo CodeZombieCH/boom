@@ -1,7 +1,7 @@
 package book
 
 import (
-	"canonical/assessment/client"
+	"canonical/assessment/cmd/cli/utils"
 	"encoding/json"
 	"fmt"
 
@@ -12,19 +12,19 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "Lists all books",
 	Run: func(cmd *cobra.Command, args []string) {
-		apiClient := client.NewApiClient("http://localhost:8080/api")
+		apiClient := utils.CreateApiClient()
 
 		books, err := apiClient.ListBooks()
 		if err != nil {
-			fmt.Printf("failed to list books: %v/n", err)
+			utils.PrintErrorJSON(fmt.Sprintf("failed to list books: %v/n", err))
 		}
 
 		json, err := json.MarshalIndent(books, "", "  ")
 		if err != nil {
-			fmt.Printf("failed to parse response: %v/n", err)
+			utils.PrintErrorJSON(fmt.Sprintf("failed to parse response: %v/n", err))
 		}
 
-		fmt.Println(string(json))
+		utils.PrintJSON(string(json))
 	},
 }
 

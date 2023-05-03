@@ -2,8 +2,9 @@ package book
 
 import (
 	"canonical/assessment/client"
-	"encoding/json"
+	"canonical/assessment/cmd/cli/utils"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -16,54 +17,70 @@ var createCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		parsedBook, err := parseBook(cmd.Flags())
 		if err != nil {
-			fmt.Printf("failed to parse book: %v/n", err)
+			utils.PrintErrorJSON(fmt.Sprintf("failed to parse book: %v", err))
+			os.Exit(1)
 		}
 
-		apiClient := client.NewApiClient("http://localhost:8080/api")
+		apiClient := utils.CreateApiClient()
 		book, err := apiClient.CreateBook(parsedBook)
 		if err != nil {
-			fmt.Printf("failed to create book: %v/n", err)
+			utils.PrintErrorJSON(fmt.Sprintf("failed to create book: %v", err))
+			os.Exit(1)
 		}
 
-		json, err := json.MarshalIndent(book, "", "  ")
-		if err != nil {
-			fmt.Printf("failed to parse response: %v/n", err)
-		}
-
-		fmt.Println(string(json))
+		utils.PrintJSON(book)
 	},
 }
 
-func init() {
-	createCmd.Flags().StringP("title", "t", "", "title")
-	createCmd.MarkFlagRequired("title")
+const (
+	BookCmdFlagTitle           string = "title"
+	BookCmdFlagAuthor          string = "author"
+	BookCmdFlagPublicationDate string = "publication-date"
+	BookCmdFlagEdition         string = "edition"
+	BookCmdFlagDescription     string = "description"
+	BookCmdFlagGenre           string = "genre"
+)
 
-	createCmd.Flags().StringP("author", "a", "", "Author")
-	createCmd.Flags().StringP("publication-date", "p", "", "Publication Date")
-	createCmd.Flags().StringP("edition", "e", "", "Edition")
-	createCmd.Flags().StringP("description", "d", "", "Description")
-	createCmd.Flags().StringP("genre", "g", "", "Genre")
+func init() {
+	createCmd.Flags().StringP(BookCmdFlagTitle, "t", "", "title")
+	createCmd.MarkFlagRequired(BookCmdFlagTitle)
+
+	createCmd.Flags().StringP(BookCmdFlagAuthor, "a", "", "Author")
+	createCmd.Flags().StringP(BookCmdFlagPublicationDate, "p", "", "Publication Date")
+	createCmd.Flags().StringP(BookCmdFlagEdition, "e", "", "Edition")
+	createCmd.Flags().StringP(BookCmdFlagDescription, "d", "", "Description")
+	createCmd.Flags().StringP(BookCmdFlagGenre, "g", "", "Genre")
 }
 
 func parseBook(flags *pflag.FlagSet) (*client.Book, error) {
-	title, _ := flags.GetString("title")
-	author, _ := flags.GetString("author")
-	publicationDateRaw, _ := flags.GetString("publication-date")
-	edition, _ := flags.GetString("edition")
-	description, _ := flags.GetString("description")
-	genre, _ := flags.GetString("genre")
+	var book = &client.Book{}
 
-	publicationDate, err := time.Parse("2006-01-02", publicationDateRaw)
-	if err != nil {
-		return nil, err
+	titleRaw, _ := flags.GetString(BookCmdFlagTitle)
+	book.Title = titleRaw
+
+	if author, _ := flags.GetString(BookCmdFlagAuthor); len(author) > 0 {
+		book.Title = titleRaw
 	}
 
-	return &client.Book{
-		Title:           title,
-		Author:          author,
-		PublicationDate: publicationDate,
-		Edition:         edition,
-		Description:     description,
-		Genre:           genre,
-	}, nil
+	if publicationDateRaw, _ := flags.GetString(BookCmdFlagPublicationDate); len(publicationDateRaw) > 0 {
+		date, err := time.Parse("2006-01-02", publicationDateRaw)
+		if err != nil {
+			return nil, err
+		}
+		book.PublicationDate = &date
+	}
+
+	if edition, _ := flags.GetString(BookCmdFlagEdition); len(edition) > 0 {
+		book.Edition = &edition
+	}
+
+	if description, _ := flags.GetString(BookCmdFlagDescription); len(description) > 0 {
+		book.Description = &description
+	}
+
+	if genre, _ := flags.GetString(BookCmdFlagGenre); len(genre) > 0 {
+		book.Genre = &genre
+	}
+
+	return book, nil
 }

@@ -15,11 +15,11 @@ type BookStore interface {
 type Book struct {
 	ID              uint
 	Title           string
-	Author          string
-	PublicationDate time.Time
-	Edition         string
-	Description     string
-	Genre           string
+	Author          *string
+	PublicationDate *time.Time
+	Edition         *string
+	Description     *string
+	Genre           *string
 }
 
 var (

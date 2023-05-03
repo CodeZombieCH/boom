@@ -32,13 +32,13 @@ func (r *BookRoutes) setupRoutes(group *gin.RouterGroup) {
 
 // Shared
 type bookResponse struct {
-	ID              uint      `json:"id"`
-	Title           string    `json:"title"`
-	Author          string    `json:"author"`
-	PublicationDate time.Time `json:"publicationDate"`
-	Edition         string    `json:"edition"`
-	Description     string    `json:"description"`
-	Genre           string    `json:"genre"`
+	ID              uint       `json:"id"`
+	Title           string     `json:"title"`
+	Author          *string    `json:"author"`
+	PublicationDate *time.Time `json:"publicationDate"`
+	Edition         *string    `json:"edition"`
+	Description     *string    `json:"description"`
+	Genre           *string    `json:"genre"`
 }
 
 func (r *BookRoutes) getBooks(c *gin.Context) {
@@ -52,12 +52,12 @@ func (r *BookRoutes) getBooks(c *gin.Context) {
 }
 
 type createBookRequest struct {
-	Title           string    `json:"title"`
-	Author          string    `json:"author"`
-	PublicationDate time.Time `json:"publicationDate"`
-	Edition         string    `json:"edition"`
-	Description     string    `json:"description"`
-	Genre           string    `json:"genre"`
+	Title           string     `json:"title"`
+	Author          *string    `json:"author"`
+	PublicationDate *time.Time `json:"publicationDate"`
+	Edition         *string    `json:"edition"`
+	Description     *string    `json:"description"`
+	Genre           *string    `json:"genre"`
 }
 
 func (r *BookRoutes) createBook(c *gin.Context) {

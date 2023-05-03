@@ -13,7 +13,7 @@ type BookDBStore struct {
 }
 
 func NewBookDBStore(db *gorm.DB) (*BookDBStore, error) {
-	err := db.AutoMigrate(&bookModel{})
+	err := db.AutoMigrate(&book{})
 	if err != nil {
 		return nil, fmt.Errorf("store: migration failed: %w", err)
 	}
@@ -21,7 +21,7 @@ func NewBookDBStore(db *gorm.DB) (*BookDBStore, error) {
 }
 
 func (s *BookDBStore) Set(entity *Book) (*Book, error) {
-	model := bookModel{
+	model := book{
 		Model:           gorm.Model{ID: entity.ID},
 		Title:           entity.Title,
 		Author:          entity.Author,
@@ -40,7 +40,7 @@ func (s *BookDBStore) Set(entity *Book) (*Book, error) {
 }
 
 func (s *BookDBStore) Get(id uint) (*Book, error) {
-	var model bookModel
+	var model book
 
 	if result := s.db.First(&model, id); result.Error != nil {
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
@@ -61,7 +61,7 @@ func (s *BookDBStore) Get(id uint) (*Book, error) {
 }
 
 func (s *BookDBStore) Remove(id uint) error {
-	if result := s.db.Delete(&bookModel{}, id); result.Error != nil {
+	if result := s.db.Delete(&book{}, id); result.Error != nil {
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return ErrNotFound
 		} else {
@@ -73,7 +73,7 @@ func (s *BookDBStore) Remove(id uint) error {
 }
 
 func (s *BookDBStore) GetAll() ([]Book, error) {
-	var models []bookModel
+	var models []book
 	result := s.db.Find(&models)
 	if result.Error != nil {
 		return nil, fmt.Errorf("store: failed to get records: %w", result.Error)
@@ -97,12 +97,12 @@ func (s *BookDBStore) GetAll() ([]Book, error) {
 }
 
 // Internal model of a book used by the ORM
-type bookModel struct {
+type book struct {
 	gorm.Model
 	Title           string
-	Author          string
-	PublicationDate time.Time
-	Edition         string
-	Description     string
-	Genre           string
+	Author          *string
+	PublicationDate *time.Time
+	Edition         *string
+	Description     *string
+	Genre           *string
 }
