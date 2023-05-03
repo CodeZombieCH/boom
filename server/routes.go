@@ -2,6 +2,7 @@ package server
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 
@@ -31,12 +32,16 @@ func (r *BookRoutes) setupRoutes(group *gin.RouterGroup) {
 
 // Shared
 type bookResponse struct {
-	ID    uint   `json:"id"`
-	Title string `json:"title"`
+	ID              uint      `json:"id"`
+	Title           string    `json:"title"`
+	Author          string    `json:"author"`
+	PublicationDate time.Time `json:"publicationDate"`
+	Edition         string    `json:"edition"`
+	Description     string    `json:"description"`
+	Genre           string    `json:"genre"`
 }
 
 func (r *BookRoutes) getBooks(c *gin.Context) {
-
 	books, err := r.store.GetAll()
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
@@ -46,18 +51,30 @@ func (r *BookRoutes) getBooks(c *gin.Context) {
 	c.JSON(http.StatusOK, books)
 }
 
-type createAliasRequest struct {
-	Title string `json:"title"`
+type createBookRequest struct {
+	Title           string    `json:"title"`
+	Author          string    `json:"author"`
+	PublicationDate time.Time `json:"publicationDate"`
+	Edition         string    `json:"edition"`
+	Description     string    `json:"description"`
+	Genre           string    `json:"genre"`
 }
 
 func (r *BookRoutes) createBook(c *gin.Context) {
-
-	var request createAliasRequest
+	var request createBookRequest
 	if err := c.BindJSON(&request); err != nil {
 		return
 	}
 
-	book := &store.Book{ID: 0, Title: request.Title}
+	book := &store.Book{
+		ID:              0,
+		Title:           request.Title,
+		Author:          request.Author,
+		PublicationDate: request.PublicationDate,
+		Edition:         request.Edition,
+		Description:     request.Description,
+		Genre:           request.Genre,
+	}
 
 	book, err := r.store.Set(book)
 	if err != nil {

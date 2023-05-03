@@ -10,8 +10,13 @@ import (
 )
 
 type Book struct {
-	ID    int    `json:"id"`
-	Title string `json:"title"`
+	ID              int       `json:"id"`
+	Title           string    `json:"title"`
+	Author          string    `json:"author"`
+	PublicationDate time.Time `json:"publicationDate"`
+	Edition         string    `json:"edition"`
+	Description     string    `json:"description"`
+	Genre           string    `json:"genre"`
 }
 
 type ApiClient struct {
@@ -53,7 +58,7 @@ func (c *ApiClient) ListBooks() ([]Book, error) {
 	return body, nil
 }
 
-func (c *ApiClient) CreateBook(book Book) (*Book, error) {
+func (c *ApiClient) CreateBook(book *Book) (*Book, error) {
 	jsonPayload, err := json.Marshal(book)
 	if err != nil {
 		return nil, err

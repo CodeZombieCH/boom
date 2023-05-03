@@ -2,6 +2,8 @@ package store
 
 import (
 	"errors"
+	"fmt"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -13,17 +15,25 @@ type BookDBStore struct {
 func NewBookDBStore(db *gorm.DB) (*BookDBStore, error) {
 	err := db.AutoMigrate(&bookModel{})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("store: migration failed: %w", err)
 	}
 	return &BookDBStore{db: db}, nil
 }
 
 func (s *BookDBStore) Set(entity *Book) (*Book, error) {
-	model := bookModel{Title: entity.Title}
+	model := bookModel{
+		Model:           gorm.Model{ID: entity.ID},
+		Title:           entity.Title,
+		Author:          entity.Author,
+		PublicationDate: entity.PublicationDate,
+		Edition:         entity.Edition,
+		Description:     entity.Description,
+		Genre:           entity.Genre,
+	}
 
 	result := s.db.Save(&model)
 	if result.Error != nil {
-		return nil, result.Error
+		return nil, fmt.Errorf("store: failed to save record: %w", result.Error)
 	}
 
 	return s.Get(model.ID)
@@ -36,10 +46,18 @@ func (s *BookDBStore) Get(id uint) (*Book, error) {
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
 		} else {
-			return nil, result.Error
+			return nil, fmt.Errorf("store: failed to get record: %w", result.Error)
 		}
 	}
-	return &Book{ID: model.ID, Title: model.Title}, nil
+	return &Book{
+		ID:              model.ID,
+		Title:           model.Title,
+		Author:          model.Author,
+		PublicationDate: model.PublicationDate,
+		Edition:         model.Edition,
+		Description:     model.Description,
+		Genre:           model.Genre,
+	}, nil
 }
 
 func (s *BookDBStore) Remove(id uint) error {
@@ -47,7 +65,7 @@ func (s *BookDBStore) Remove(id uint) error {
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return ErrNotFound
 		} else {
-			return result.Error
+			return fmt.Errorf("store: failed to delete record: %w", result.Error)
 		}
 	}
 
@@ -58,23 +76,33 @@ func (s *BookDBStore) GetAll() ([]Book, error) {
 	var models []bookModel
 	result := s.db.Find(&models)
 	if result.Error != nil {
-		return nil, result.Error
+		return nil, fmt.Errorf("store: failed to get records: %w", result.Error)
 	}
 
 	var books []Book
 	for i := 0; i < len(models); i++ {
 		model := models[i]
-		books = append(books, Book{ID: model.ID, Title: model.Title})
+		books = append(books, Book{
+			ID:              model.ID,
+			Title:           model.Title,
+			Author:          model.Author,
+			PublicationDate: model.PublicationDate,
+			Edition:         model.Edition,
+			Description:     model.Description,
+			Genre:           model.Genre,
+		})
 	}
 
 	return books, nil
 }
 
-func (s *BookDBStore) GetNextId() (uint, error) {
-	return 0, nil
-}
-
+// Internal model of a book used by the ORM
 type bookModel struct {
 	gorm.Model
-	Title string
+	Title           string
+	Author          string
+	PublicationDate time.Time
+	Edition         string
+	Description     string
+	Genre           string
 }

@@ -7,7 +7,7 @@ import (
 
 func TestCreateBook(t *testing.T) {
 	client := NewApiClient("http://localhost:8080/api")
-	book, err := client.CreateBook(Book{Title: "wuuzaa"})
+	book, err := client.CreateBook(&Book{Title: "wuuzaa"})
 	if err != nil {
 		t.Fatal(err)
 	}

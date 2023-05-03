@@ -40,7 +40,7 @@ Create book
     boom book create
         --title <title>
         --author <author>
-        --published-date <published-date>
+        --publication-date <publication-date>
         --edition <edition>
         --description <description>
         --genre <genre>

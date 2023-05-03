@@ -1,6 +1,9 @@
 package store
 
-import "errors"
+import (
+	"errors"
+	"time"
+)
 
 type BookStore interface {
 	Set(entity *Book) (*Book, error)
@@ -10,10 +13,15 @@ type BookStore interface {
 }
 
 type Book struct {
-	ID    uint
-	Title string
+	ID              uint
+	Title           string
+	Author          string
+	PublicationDate time.Time
+	Edition         string
+	Description     string
+	Genre           string
 }
 
 var (
-	ErrNotFound = errors.New("not found")
+	ErrNotFound = errors.New("store: record not found")
 )
