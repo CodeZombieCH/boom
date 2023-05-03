@@ -1,6 +1,16 @@
 # Book Management System
 
-Book Management System or boom (from **Boo**k **M**anagement System) as the name suggests is a simple book management system.
+
+              _ ._  _ , _ ._
+            (_ ' ( `  )_  .__)
+          ( (  (    )   `)  ) _)
+         (__ (_   (_ . _) _) ,__)
+             `~~`\ ' . /`~~`
+                  ;   ;
+                  /   \
+    _____________/_ __ \_____________
+
+**boom** (from **Boo**k **M**anagement System) is a simple book management system.
 
 
 ## CLI
