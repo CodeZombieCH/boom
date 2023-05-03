@@ -23,7 +23,7 @@ var rootCmd = &cobra.Command{
 		"_____________/_ __ \\_____________\n" +
 		"         *** b o o m ***\n" +
 		"‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\n" +
-		`(from *Boo*k *M*anagement System) as the name suggests is a simple book management system.
+		`(from *Boo*k *M*anagement System) is a simple book management system.
 	`,
 }
 
