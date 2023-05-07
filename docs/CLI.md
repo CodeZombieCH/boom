@@ -58,7 +58,7 @@ List books
 
 with
 - `<title-filter>`: substring filter applied to the *title* property
-- `<filter>`: filter expression, see Filter
+- `<filter>`: filter expression, see [Filter](#filter)
 
 ### Create
 
@@ -125,7 +125,7 @@ List collections
 
 with
 - `<name-filter>`: substring filter applied to the *name* property
-- `<filter>`: filter expression, see Filter
+- `<filter>`: filter expression, see [Filter](#filter)
 
 with
 - `<filter>`: filter expression
@@ -201,5 +201,5 @@ List books of a collection
 with
 - `<collection-id>`: ID of collection
 - `<title-filter>`: substring filter applied to the *title* property
-- `<filter>`: filter expression, see Filter
+- `<filter>`: filter expression, see [Filter](#filter)
 
