@@ -19,6 +19,28 @@ with
 
 ### Filter
 
+List operations usually support filtering of the result, offering
+- a simple substring filter against the main property of the entity
+- a filter expression
+
+#### Substring Filter
+
+Allows filtering by the entities main field.
+
+Example:
+
+Filter book where *title" matches the substring "for dummies":
+
+    boom book list "for dummies"
+
+#### Filter Expression
+Allows granular filtering by the entities properties. Multiple conditions can be expressed by combining them using a "," (comma).
+
+Example:
+
+Filter books where genre is "fiction" and publication date is before 1900
+
+    boom book list --filter "genre=fiction,publication-date<1900-01-01"
 
 
 ## Books
