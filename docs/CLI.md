@@ -17,6 +17,10 @@ with
 - `<operation>`: the operation to apply on the entity
 
 
+### Filter
+
+
+
 ## Books
 
 Manage books
@@ -28,10 +32,11 @@ Manage books
 
 List books
 
-    boom book list [--filter <filter>]
+    boom book list [<title-filter>] [--filter <filter>]
 
 with
-- `<filter>`: filter expression
+- `<title-filter>`: substring filter applied to the *title* property
+- `<filter>`: filter expression, see Filter
 
 ### Create
 
@@ -46,7 +51,12 @@ Create book
         --genre <genre>
 
 with
-- `<filter>`: filter expression
+- `<title>`: title of book
+- `<author>`: author of book
+- `<publication-date>`: publication date of book in the format YYY-MM-DD
+- `<edition>`: edition of the book
+- `<description>`: description of book
+- `<genre>`: genre of book
 
 ### Show
 
@@ -65,8 +75,8 @@ Set a property of a book
 
 with
 - `<book-id>`: ID of book
-- `<key>`: Key of the property
-- `<value>`: Value of the property
+- `<key>`: key of the property to set
+- `<value>`: value of the property to set
 
 ### Delete
 
@@ -89,7 +99,11 @@ Manage collections of books
 
 List collections
 
-    boom collection list [--filter <filter>]
+    boom collection list [<name-filter>] [--filter <filter>]
+
+with
+- `<name-filter>`: substring filter applied to the *name* property
+- `<filter>`: filter expression, see Filter
 
 with
 - `<filter>`: filter expression
@@ -122,8 +136,8 @@ Set a property of a collection
 
 with
 - `<collection-id>`: ID of collection
-- `<key>`: Key of the property
-- `<value>`: Value of the property
+- `<key>`: key of the property to set
+- `<value>`: value of the property to set
 
 
 ### Delete
@@ -155,3 +169,15 @@ Remove a book from a collection
 with
 - `<collection-id>`: ID of collection
 - `<book-id>`: ID of book
+
+### List Books
+
+List books of a collection
+
+    boom collection list-books <collection-id> [<title-filter>] [--filter <filter>]
+
+with
+- `<collection-id>`: ID of collection
+- `<title-filter>`: substring filter applied to the *title* property
+- `<filter>`: filter expression, see Filter
+
