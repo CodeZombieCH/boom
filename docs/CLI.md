@@ -29,7 +29,7 @@ Allows filtering by the entities main field.
 
 Example:
 
-Filter book where *title" matches the substring "for dummies":
+Filter books where *title* matches the substring "for dummies":
 
     boom book list "for dummies"
 
@@ -38,7 +38,7 @@ Allows granular filtering by the entities properties. Multiple conditions can be
 
 Example:
 
-Filter books where genre is "fiction" and publication date is before 1900
+Filter books where *genre* is "fiction" and *publication date* is before 1900
 
     boom book list --filter "genre=fiction,publication-date<1900-01-01"
 
